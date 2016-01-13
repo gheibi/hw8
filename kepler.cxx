@@ -12,7 +12,7 @@ using namespace std;
 int main(){
   
   double H;
-  const double dt=0.05;
+  const double dt=0.0005;
   const double tEnd=20*M_PI;
   two_body a;
   initial_values(& a, H );
@@ -20,10 +20,11 @@ int main(){
   cout<<'0'<<'\t'<<H<<'\t'<<a.p[0]<<'\t'<<a.p[1]<<'\t'<<a.q[0]<<'\t'<<a.q[1]<<endl;
   
   for(double t=dt; t<tEnd; t+=dt){
-  
-    for(int i=0;  i<2; i++){
+   double qsum=pow((a.q[0]*a.q[0]+a.q[1]*a.q[1]),-3.0/2.0);
     
-      a.p[i]-= dt * a.q[i]* pow((a.q[0]*a.q[0]+a.q[1]*a.q[1]),-3.0/2.0);
+    for(int i=0;  i<2; i++){
+      
+      a.p[i]-= dt * a.q[i]* qsum;
       a.q[i]+= dt * a.p[i];
       
     }
